@@ -1,0 +1,101 @@
+{% extends 'profile_temp.html' %}
+{% load staticfiles %}
+
+{% block profile_content %}
+<div id="headerwraper">
+  <div class="container">
+    <div class="col-md-3 col-md-pull-1 centered">
+      <div class="row" align="center">
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        {% if my_page %}
+          <img class="img-responsive" src="/static/{{ user_profile.user_photo }}" data-toggle="modal" data-target="#myModal">
+        {% else %}
+          <img class="img-responsive" src="/static/{{ user_profile.user_photo }}">
+        {% endif %}
+      </div>
+      <div class="row">
+        <h3>{{ user_profile.user_firstname }} {{ user_profile.user_surname }}</h3>
+        <h4>{{ user_age }} {{ user_age_word }}, {{ user_profile.user_city }}</h4>
+        <img src="{% static "static/img/vkontakte.png" %}"></img><a href="https://vk.com/{{ user_profile.user_vk }}">&nbsp{{ user_profile.user_vk }}</a><br><br>
+        {% if not my_page %}
+          <div class="btn-group">
+            <button type="button" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-envelope"></span></button>
+            <button type="button" class="btn btn-default dropdown-toggle btn-lg" data-toggle="dropdown"><span class="caret"></span>
+              <span class="sr-only">Share Dropdown</span>
+            </button>
+            <ul class="dropdown-menu" role="menu">
+              <li><a href="/invites/{{ user_profile.user_id }}/meeting/">Хотел бы сходить на свидание</a></li>
+              <li><a href="/invites/{{ user_profile.user_id }}/deep_know/">Хотел бы узнать получше</a></li>
+              <li class="divider"></li>
+              <li><a href="/invites/{{ user_profile.user_id }}/love/">Люблю {% if user_profile.user_sex == "Ж"%}её!{% else %}его!{% endif %}</a></li>
+              <li><a href="/invites/{{ user_profile.user_id }}/like/">{% if user_profile.user_sex == "Ж"%}Она мне симпатична!{% else %}Он мне симпатичен{% endif %}</a></li>
+            </ul>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+    <div class="col-md-9 col-md-move-left-1">
+      <div class="row">
+        <div class="page-header">
+          <h1><small>Приглашения:</small></h1>
+        </div>
+      </div>
+      <div class="row">
+        {% for invite in invites %}
+          {% if invite.message == "meeting" %}
+            <div class="well">
+              Кто-то был бы не прочь провести с {% if my_page %}вами{% else %}{% if user_profile.user_sex == "Ж"%}ней{% else %}ним{% endif %}{% endif %} свидание... <strong class="pull-right"> {{ invite.date }} </strong>
+            </div>
+          {% endif %}
+          {% if invite.message == "deep_know" %}
+            <div class="well">
+              Кое-кто хочет узнать {% if my_page %}вас{% else %}{% if user_profile.user_sex == "Ж"%}её{% else %}его{% endif %}{% endif %} получше! <strong class="pull-right"> {{ invite.date }} </strong>
+            </div>
+          {% endif %}
+          {% if invite.message == "love" %}
+            <div class="well">
+              Чудесно! Кто-то признался {% if my_page %}вам{% else %}{% if user_profile.user_sex == "Ж"%}ей{% else %}ему{% endif %}{% endif %} в любви !!! <strong class="pull-right"> {{ invite.date }} </strong>
+            </div>
+          {% endif %}
+          {% if invite.message == "like" %}
+            <div class="well">
+               {% if user_profile.user_sex == "Ж"%}У {% if my_page %}вас{% else %}неё{% endif %} появился поклонник, кому-то {% if my_page %}вы{% else %}она{% endif %} очень симпатичны!{% else %}У {% if my_page %}вас{% else %}него{% endif %} появилась поклонница, кому то {% if my_page %}вы  очень симпатичны!{% else %}он  очень симпатичен!{% endif %}{% endif %}<strong class="pull-right"> {{ invite.date }} </strong>
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<form action="/profile/change_avatar/" enctype="multipart/form-data" method="post" role="form">
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">Смена фото</h4>
+      </div>
+      <div class="modal-body">
+      {% csrf_token %}
+      {{ form_change_avatar.user_photo }}
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+        <input type="submit" class="btn btn-primary" value="Cохранить">
+      </div>
+    </div>
+  </div>
+</div>
+</form>
+{% endblock %}
+
+{% block count %}
+  {{ invites_count }}
+{% endblock %}

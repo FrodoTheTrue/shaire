@@ -1,0 +1,196 @@
+{% load staticfiles %}
+
+
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="{% static "static/img/favicon.png" %}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.0/jquery.min.js"></script>
+   <script src="{% static "static/js/bootstrap.min.js" %}"></script>
+    <script type="text/javascript">
+	$(document).ready(function(){
+	$("a[href*=#]:not([href=#])").bind('click', function (event) {
+	  var thisHash = this.hash;
+	  var targetOffset = $(thisHash).offset().top;
+	  $("html,body").stop().animate({
+	    scrollTop: targetOffset
+	  }, 1100 );
+	  location.hash = thisHash;
+	  event.preventDefault();
+	});
+
+	});
+	</script>
+
+
+    <title>Shaire: Сделай шаг!</title>
+
+    <script type="text/javascript" src="http://vk.com/js/api/share.js?90" charset="windows-1251"></script>
+
+    <!-- Bootstrap core CSS -->
+    <link href="{% static "static/css/bootstrap.css" %}" rel="stylesheet" type='text/css'>
+
+    <!-- Custom styles for this template -->
+    <link href="{% static "static/css/main.css" %}" rel="stylesheet" type='text/css'>
+
+    <!-- Fonts from Google Fonts -->
+	<link href='http://fonts.googleapis.com/css?family=Lato:300,400,900' rel='stylesheet' type='text/css'>
+    
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+
+    <!-- Fixed navbar -->
+    <div class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/"><b>Shaire</b></a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+            {% if username %}
+				<li><a href="/auth/logout/">Выйти ({{ username }})</a></li>
+			{% else %}
+				<li><a href="/auth/login/">Войти</a></li>
+			{% endif %}
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </div>
+
+	<div id="headerwrap">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-7">
+					<center><h1><strong>Sha</strong>re your des<strong>ire</strong>, <br>
+					wait for response <br> and don't be afraid, <br>
+					you are already chosen!</h1> </br>
+					<a href="#more_info"><button class="btn btn-info" type="button" id = "learn-more">Узнать больше</button></a>
+					<a href="/auth/register/"><button class="btn btn-success" type="button" id = "create-account">Создать аккаунт</button></a>
+					<br><br>
+					<a href="http://vk.com/share.php?url=http://shaire.ru" target="_blank"><button class="btn btn-primary btn-lg" type="button" id = "create-account">Рассказать ВКонтакте</button></a>
+					<center>
+				</div><!-- /col-lg-6 -->
+				
+				<div class="col-lg-5">
+					<br>
+					<br>
+					<img class="img-responsive" src="{% static "static/img/17.2.png" %}" alt="">
+				</div><!-- /col-lg-6 --> 
+				
+			</div><!-- /row -->
+		</div><!-- /container -->
+	</div><!-- /headerwrap -->
+	
+	
+	<div class="container" id = "more_info" name = "scr">
+		<div class="row mt centered">
+			<div class="col-lg-12">
+				<div class="row">
+				<h1>Shaire.ru - <small> это социальная платформа для анонимных посланий и взаимных оповещений. Приглашайте друзей и обменивайтесь с ними своими желаниями и эмоциями. Если вы все еще сомневаетесь, посмотрите руководство по пользованию сайтом ниже.</small> </h1>
+				</div>
+				<div class="row">
+				<h2>Как пользоваться сайтом?</h2>
+				</div>
+				<div class="row">
+					<div class="col-lg-6">
+					<br>
+					<br>
+					<h3>1) <a href="/auth/register/"> Создайте аккаунт </a>. Это займет меньше минуты вашего времени. </h3>
+						<div class="col-lg-offset-9 col-lg-3">
+						<img src = "{% static "static/img/41.png" %}">
+						</div>
+					</div>
+					<div class="col-lg-5 col-lg-offset-1">
+					<img src = "{% static "static/img/main1.png" %}">
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-lg-4">
+					<br>
+					<br>
+					<img src={% static "static/img/main2.png" %}>
+					</div>
+					<div class="col-lg-6 col-lg-offset-1">
+					<h3>2) Заходите на страницы к своим знакомым и отправляйте анонимные послания, нажав на кнопку <span class="glyphicon glyphicon-envelope"></span> . </h3>
+					<div class="col-lg-1">
+					<img src = "{% static "static/img/45.png" %}">
+					</div>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-lg-6">
+					<br>
+					<br>
+					<h3>3) Если ваши знакомые отправят вам такое же послание, тогда оба отправителя получат оповещение о послании. </h3>
+						<div class="col-lg-offset-9 col-lg-3">
+						<img src = "{% static "static/img/41.png" %}">
+						</div>
+					</div>
+					<div class="col-lg-5 col-lg-offset-1">
+					<br>
+					<br>
+					<img src = "{% static "static/img/main3.png" %}">
+					</div>
+				</div>
+
+
+				<div class="row">
+				<h2>Вопросы:</h2>
+				</div>
+				<div class="row">
+				<h3><strong>Сейчас сайт находится в alpha версии. Что это значит? </strong></h3>
+				<h4>Ответ: в данный момент проект только начинает развиваться, в ближайшее время мы добавим гораздо больше функциональности. Однако сейчас сайт полностью работоспособен.</h4>
+				</div>
+				<div class="row">
+				<h3><strong>У меня возникли проблемы с сайтом, куда обратиться? </strong></h3>
+				<h4>Ответ: если у вас возникли проблемы при пользовании сайтом, отправьте письмо на support@shaire.ru</h4>
+				</div>
+				<h3><strong>Почему мне никто не отправляет послания? :(</strong></h3>
+				<h4>Ответ: скорее всего, потому что ваши знакомые просто не знают о существовании вашей страницы. Расскажите им!</h4>
+				</div>
+				<h3><strong>Как мне получать информацию о развитии сайта?</strong></h3>
+				<h4>Ответ: присоединяйтесь к нашей группе <a href="https://vk.com/shaire_ru">ВКонтакте</a>!</h4>
+				</div>
+				<div class="row">
+				<h3>* Если вы хотите выразить свои замечания или предложения, отправляйте письма на dev@shaire.ru.</h3>
+				</div>
+			</div>
+		</div><!-- /row -->
+		
+
+			</div><!--/col-lg-4 -->
+		</div><!-- /row -->
+	</div><!-- /container -->
+	
+	<div class="navbar navbar-static-bottom">
+		<hr>
+		<center>Shaire 2014. Join us!</center>
+		</div>
+	</div><!-- /container -->
+	
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script src="assets/js/bootstrap.min.js"></script>
+  </body>
+</html>

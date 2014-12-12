@@ -1,0 +1,35 @@
+{% extends 'profile_temp.html' %}
+{% load staticfiles %}
+
+
+{% block profile_content %}
+<div id="headerwraper">
+  <div class="container">
+	<div class="row" style="margin-top:20px;">
+		<div class="col-md-8 col-md-offset-2">
+		{% if find_smn %}
+			{% for usr in found_users %}
+				<div class="row" style="margin-bottom:15px;">
+					<div class="col-md-4">
+						<img class="img-search" src="/static/{{ usr.users.user_photo }}"/>
+					</div>
+					<div class="col-md-8">
+						<h4><a href="/profile/{{ usr.username }}">{{ usr.users.user_firstname }} {{ usr.users.user_surname }}</a></h4>
+						{{ usr.users.user_city }}
+					</div>
+				</div>
+			{% endfor %}
+		{% else %}
+			<div class="row">
+				<div class="alert alert-danger" style="text-align:center; margin-top:20%;">Извините, по заданным критериям не было найдено ни одного пользователя!</div>
+			</div>
+		{% endif %}
+		</div>
+	</div>
+  </div>
+</div>
+{% endblock %}
+
+{% block count %}
+  {{ invites_count }}
+{% endblock %}

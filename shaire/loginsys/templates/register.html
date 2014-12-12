@@ -1,0 +1,179 @@
+{% extends 'templ.html' %}
+
+{% block login_or_registration %}
+				<div class="row">
+				<div class="col-lg-12 col-lg-offset-4">
+   				<br><br>
+				<form action="/auth/register/" enctype="multipart/form-data" method="post" class="form-horizontal" role="form">
+					{% csrf_token %}
+          <br />
+          <div class="form-group">
+    		<label class="col-sm-1 control-label">Логин</label>
+    			<div class="col-sm-10">
+    				{{ user_form.username }}
+              {% if user_form_error %}
+              {% for text_error, name_error in user_form_error%}
+              {% if name_error == 'username' %}
+              <div class="text-danger">*{{ text_error }}</div>
+              {% endif %}
+              {% endfor%}
+              {% endif %}
+    			</div>
+  		  </div>
+  		  <div class="form-group">
+    	  	<label class="col-sm-1 control-label">Пароль</label>
+    			<div class="col-sm-10">
+      				{{ user_form.password }}
+              {% if user_form_error %}
+              {% for text_error, name_error in user_form_error%}
+              {% if name_error == 'password' %}
+              <div class="text-danger">*{{ text_error }}</div>
+              {% endif %}
+              {% endfor%}
+              {% endif %}
+    			</div>
+  		  </div>
+  		  <div class="form-group">
+    	  	<label class="col-sm-1 control-label">E-mail</label>
+    			<div class="col-sm-10">
+      				{{ user_form.email }}
+              {% if user_form_error %}
+              {% for text_error, name_error in user_form_error%}
+              {% if name_error == 'email' %}
+              <div class="text-danger">*{{ text_error }}</div>
+              {% endif %}
+              {% endfor%}
+              {% endif %}
+    			</div>
+  		  </div>
+  		  <div class="form-group">
+    	  	<label class="col-sm-1 control-label">Имя</label>
+    			<div class="col-sm-10">
+      				{{ form.user_firstname }}
+              {% if form_error %}
+              {% for text_error, name_error in form_error%}
+              {% if name_error == 'user_firstname' %}
+              <div class="text-danger">*{{ text_error }}</div>
+              {% endif %}
+              {% endfor%}
+              {% endif %}
+    			</div>
+  		  </div>
+  		  <div class="form-group">
+    	  	<label class="col-sm-1 control-label">Фамилия</label>
+    			<div class="col-sm-10">
+      				{{ form.user_surname }}
+              {% if form_error %}
+              {% for text_error, name_error in form_error%}
+              {% if name_error == 'user_surname' %}
+              <div class="text-danger">*{{ text_error }}</div>
+              {% endif %}
+              {% endfor%}
+              {% endif %}
+    			</div>
+  		  </div>
+  		  <div class="form-group">
+    	  	<label class="col-sm-1 control-label">Пол</label>
+    			<div class="col-sm-10">
+      				{{ form.user_sex }}
+    			</div>
+  		  </div>
+        <div class="form-group">
+          <label class="col-sm-1 control-label">VK ID</label>
+          <div class="col-sm-10">
+              {{ form.user_vk }}
+              {% if form_error %}
+              {% for text_error, name_error in form_error%}
+              {% if name_error == 'user_firstname' %}
+              <div class="text-danger">*{{ text_error }}</div>
+              {% endif %}
+              {% endfor%}
+              {% endif %}
+          </div>
+        </div>
+  		  <div class="form-group">
+    	  	<label class="col-sm-1 control-label">Город</label>
+    			<div class="col-sm-10">
+      				{{ form.user_city }}
+              {% if form_error %}
+              {% for text_error, name_error in form_error%}
+              {% if name_error == 'user_city' %}
+              <div class="text-danger">*{{ text_error }}</div>
+              {% endif %}
+              {% endfor%}
+              {% endif %}
+    			</div>
+  		  </div>
+  		  <div class="form-group">
+    	  	<label class="col-sm-1 control-label">Дата рождения</label>
+    			<div class="col-sm-10">
+      				{{ form.user_birthday }}
+              <br>
+              {% if form_error %}
+              {% for text_error, name_error in form_error%}
+              {% if name_error == 'user_birthday' %}
+              <div class="text-danger">*{{ text_error }}</div>
+              {% endif %}
+              {% endfor%}
+              {% endif %}
+    			</div>
+  		  </div>
+  		  <div class="form-group">
+    	  	<label class="col-sm-1 control-label">Фото</label>
+    			<div class="col-sm-10">
+      				{{ form.user_photo }}
+    			</div>
+  		  </div>
+        <div class="form-group">
+          <label class="col-sm-1 control-label">Введите ключ:</label>
+          <div class="col-sm-10">
+              {{ form.captcha }}
+              {% if form_error %}
+              {% for text_error, name_error in form_error%}
+              {% if name_error == 'captcha' %}
+              <div class="text-danger">*Неверный код. Попробуйте ввести ещё раз.</div>
+              {% endif %}
+              {% endfor%}
+              {% endif %}
+          </div>
+        </div>
+  		  &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp<input class="btn btn-primary btn-lg" type="submit" value="Готово">
+  		  </form>
+<!--          
+					<div class="row">
+						<div class="col-md-8 col-md-offset-2">
+							<center>
+								{{ user_form.username }}
+								<br>
+								{{ user_form.password }}
+								<br>
+								{{ user_form.email }}
+								<br>
+								{{ form.user_firstname }}
+								<br>
+								{{ form.user_surname }}
+								<br>
+								{{ form.user_sex}}
+								<br>
+								{{ form.user_city }}
+								<br>
+								Дата рождения:
+								{{ form.user_birthday }}
+								<br>
+								Фото:{{ form.user_photo }}
+								<br>
+								<input class="btn btn-primary" type="submit" value="Готово">
+							</center>
+						 <!-- </div> -->
+					</div>
+				</form>
+			</div>
+		</div><!-- /row -->
+			</div><!--/col-lg-4 -->
+		</div><!-- /row -->
+	</div><!-- /container -->
+  <div class="navbar navbar-static-bottom">
+    <hr>
+    <center>Shaire 2014. Join us!</center>
+    </div>
+{% endblock %}

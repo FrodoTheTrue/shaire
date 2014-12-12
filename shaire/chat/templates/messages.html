@@ -1,0 +1,248 @@
+{% extends 'profile_temp.html' %}
+{% load staticfiles %}
+    <!-- BOOTSTRAP CORE STYLE CSS -->
+<!--    <script type="text/javascript">
+    $(document).ready(function(){
+        $('#text').keypress(function(e){
+            var cnt = 0;
+            if (e.which == 13)
+                {
+                    $('#submt_{{ user_to_username }}').click();
+                }
+        });
+    });
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('#scroll-able').scrollTop( 100000000 );
+            $('#submt_{{ user_to_username }}').click(function(){
+                var message = $("#text").val();
+                $.ajax({
+                    type: "GET",
+                    url: "/im/send_message/",
+                    data: { text_message : message , user_name : "{{ user_to_username }}" }
+                })
+                .done(function(data) {
+                    $('#messages').append(data);
+                    $('#scroll-able').scrollTop( 100000000 );
+                    $("#text").val("");
+                    $('#text').focus();
+                });
+            });
+        })
+    </script>
+    <script type="text/javascript">
+        function show()
+        {
+            a = []
+            a = $("*").html()
+            var count = 0;
+            for (var i=0; i<a.length - 7;i++)
+            {
+                if (a[i] == 'm' &&
+                    a[i + 1] == 's' &&
+                    a[i + 2] == 'g' &&
+                    a[i + 3] == '_' &&
+                    a[i + 4] == 'h' &&
+                    a[i + 5] == 'e' &&
+                    a[i + 6] == 'r' &&
+                    a[i + 7] == 'e'
+                    )
+                    count += 1;
+            }
+            console.log(count)
+            $.ajax({
+                type: "GET",
+                url: "/im/check_new/",
+                data: { count : count , user_to : "{{ user_to_username }}" },
+                success: function(data){
+                    if (data != "-1")
+                        {
+                        $("#messages").append(data);
+                        $('#scroll-able').scrollTop( 100000000 );
+                        }
+                }
+            });
+        }
+
+        $(document).ready(function(){
+            $('#scroll-able').scrollTop( 100000000 );
+            show();
+            setInterval('show()',1000);
+        });
+    </script>
+<style>
+div#scroll-able {
+	height:500px;
+	overflow:scroll;
+}
+</style>
+</head>-->
+{% block ajax %}
+    <script type="text/javascript">
+      $(document).ready(function(){
+          $('#text').keypress(function(e){
+              var cnt = 0;
+              if (e.which == 13)
+                  {
+                      $('#submt_{{ user_to_username }}').click();
+                  }
+          });
+      });
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('#scroll-able').scrollTop( 100000000 );
+            $('#submt_{{ user_to_username }}').click(function(){
+                var message = $("#text").val();
+                $.ajax({
+                    type: "GET",
+                    url: "/im/send_message/",
+                    data: { text_message : message , user_name : "{{ user_to_username }}" }
+                })
+                .done(function(data) {
+                    //$('#messages').append(data);
+                    $('#scroll-able').scrollTop( 100000000 );
+                    $("#text").val("");
+                    $('#text').focus();
+                });
+            });
+        })
+    </script>
+    <script type="text/javascript">
+        function show()
+        {
+            a = []
+            a = $("*").html()
+            var count = 0;
+            for (var i=0; i<a.length - 7;i++)
+            {
+                if (a[i] == 'm' &&
+                    a[i + 1] == 's' &&
+                    a[i + 2] == 'g' &&
+                    a[i + 3] == '_' &&
+                    a[i + 4] == 'h' &&
+                    a[i + 5] == 'e' &&
+                    a[i + 6] == 'r' &&
+                    a[i + 7] == 'e'
+                    )
+                    count += 1;
+            }
+            console.log(count)
+            $.ajax({
+                type: "GET",
+                url: "/im/check_new/",
+                data: { count : count , user_to : "{{ user_to_username }}" },
+                success: function(data){
+                    if (data != "-1")
+                        {
+                        $("#messages").append(data);
+                        $('#scroll-able').scrollTop( 100000000 );
+                        }
+                }
+            });
+        }
+
+        $(document).ready(function(){
+            $('#scroll-able').scrollTop( 100000000 );
+            show();
+            setInterval('show()', 100);
+        });
+    </script>
+{% endblock %}
+
+{% block profile_content %}
+    <div id="headerwraper">
+      <div class="container">
+        <div class="row " style="padding-top:20px;">
+            <h3 class="text-center" > Мои сообщения </h3>
+            <br /><br />
+            <div class="col-md-8">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        {{ user_to.users.user_firstname }} {{ user_to.users.user_surname }}
+                    </div>
+                    <div class="panel-body">
+                    <ul class="media-list">
+                    <div id="scroll-able">
+                    <div id = "messages" >
+                        {% for msg, avat, name, famil, nick in text_messages %}
+                            <div class = "msg_here">
+                            <li class="media">
+                                <div class="media-body">
+                                    <div class="media">
+                                        <a class="pull-left" href="#">
+                                            <img class="media-object img-circle " style="height:65px; width:65px;" src="/static/{{avat}}" />
+                                        </a>
+                                        <div class="media-body" >
+                                            {{ msg }}
+                                            <br />
+                                            <small class="text-muted">{{ name }} {{ famil }}</small>
+                                                <hr />
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            </div>
+                        {% endfor %}
+                    </div>
+                        <div id = "new_messages">
+                        </div>
+                    </div>
+                    </ul>
+
+                    </div>
+                    <div class="panel-footer">
+                        <div class="input-group">
+                                        <div id = "entering">
+                                            <input id = "text" type="text" class="form-control" placeholder="Enter Message" autofocus/>
+                                        </div>
+                                            <span class="input-group-btn">
+                                                <button id = "submt_{{ user_to_username }}" class="btn btn-info2" type="button">SEND</button>
+                                            </span>
+                                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                  <div class="panel panel-primary">
+                    <div class="panel-heading">
+                       Собеседники
+                    </div>
+                    <div class="panel-body">
+                        <ul class="media-list">
+                            {% for usr in users_list %}
+                                            <li class="media">
+
+                                                <div class="media-body">
+
+                                                    <div class="media">
+                                                        <a class="pull-left" href="#">
+                                                            <img class="media-object img-circle" style="max-height:40px; max-width:40px;" src="/static/{{ usr.users.user_photo }}" />
+                                                        </a>
+                                                        <div class="media-body" >
+
+                                                            <h5>
+                                                            <a href="/im/{{ usr.username }}/" id ="{{ usr.username }}">
+                                                             {{ usr.users.user_firstname }} {{ usr.users.user_surname }} </h5>
+                                                            </a>
+                                                           <!-- <small class="text-muted">Active From 3 hours</small> -->
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </li>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+{% endblock %}
+
+{% block count %}
+  {{ invites_count }}
+{% endblock %}

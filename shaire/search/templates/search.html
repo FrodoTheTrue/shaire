@@ -1,0 +1,50 @@
+{% extends 'profile_temp.html' %}
+{% load staticfiles %}
+
+{% block profile_content %}
+<div id="headerwraper">
+  <div class="container">
+    <div class="row" style="margin-top:20px;">
+      <div class="col-md-8 col-md-offset-2"><!-- style="background-color: #ff0000" -->
+        <div class="row">
+          <form action="/search/" method="post" accept-charset="utf-8" class="form" role="form">
+            {% csrf_token %}
+            <div class="col-md-12 text-center" style="margin-bottom:20px;">
+              <h4>Критерии поиска:</h4>
+            </div>
+            <div class="row" align="center" style="margin-bottom:20px;">
+              <div class="col-xs-10 col-md-10 col-md-offset-1 col-xs-offset-1">
+                <input type="text" name="search_username" value="" class="form-control-shaire-search" placeholder="Логин ( в этом случае остальные вводить не нужно)"  />
+              </div>
+            </div>
+            <div class="row" align="center" style="margin-bottom:20px;">
+                <div class="col-xs-5 col-md-5 col-md-offset-1 col-xs-offset-1">
+                  <input type="text" name="search_firstname" value="" class="form-control-shaire-search" placeholder="Имя"  />
+                </div>
+                <div class="col-xs-5 col-md-5">
+                    <input type="text" name="search_surname" value="" class="form-control-shaire-search" placeholder="Фамилия"  />
+                </div>
+            </div>
+            <div class="row" style="margin-bottom:20px;" align="center">
+            <label>Пол : </label><br>
+              <label class="radio-inline">
+                  <input type="radio" name="search_gender" value="male" id="male" /> Мужчина
+              </label>
+              <label class="radio-inline">
+                  <input type="radio" name="search_gender" value="female" id="female" /> Женщина
+              </label>
+            </div>
+            <div class="row" align="center">
+              <button type="submit" class="btn btn-search">Поиск</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block count %}
+  {{ invites_count }}
+{% endblock %}

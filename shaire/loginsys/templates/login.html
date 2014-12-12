@@ -1,0 +1,43 @@
+{% extends 'templ.html' %}
+
+{% block login_or_registration %}
+   <div id="headerwraper">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-4 col-lg-offset-4">
+					<br>
+					<div class="panel panel-primary">
+						<div class="panel-heading"><center>Форма входа:</center></div>
+						<div class="panel-body">
+							<form action="/auth/login/" method="post">
+								{% csrf_token %}
+								<br />
+								<div class="row">
+									<center><input type="text" name="username" id="username" class="form-control" placeholder="Логин"></center>
+								</div>
+								<br>
+								<div class="row">
+									<center><input type="password" name="password" id="password" class="form-control" placeholder="Пароль"></center>
+								</div>
+								<div class= "row">
+									<center>
+										{% if login_error %}
+											<br />
+											<div class="text-danger">{{ login_error }}</div>
+										{% endif %}
+									</center>
+								</div>
+								<br>
+								<div class="row">
+									<center>
+										<input class="btn btn-primary" type="submit" value="Войти">
+									</center>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div><!-- /row -->
+		</div><!--/col-lg-4 -->
+	</div><!-- /row -->
+{% endblock %}

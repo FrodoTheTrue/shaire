@@ -1,0 +1,79 @@
+{% extends 'profile_temp.html' %}
+{% load staticfiles %}
+
+{% block profile_content %}
+<div id="headerwraper">
+  <div class="container">
+    <div class="col-md-3 col-md-pull-1 centered">
+      <div class="row" align="center">
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <img class="img-responsive" src="/static/{{ user_profile.user_photo }}" class="img-rounded" data-toggle="modal" data-target="#myModal">
+      </div>
+      <div class="row">
+        <h3>{{ user_profile.user_firstname }} {{ user_profile.user_surname }}</h3>
+        <h4>{{ user_age }} {{ user_age_word }}, {{ user_profile.user_city }}</h4>
+        <img src="{% static "static/img/vkontakte.png" %}"></img><a href="https://vk.com/{{ user_profile.user_vk }}">&nbsp{{ user_profile.user_vk }}</a><br><br>
+      </div>
+    </div>
+  <div class="col-md-9 col-md-move-left-1">
+    <div class="row">
+      <div class="page-header">
+        <h1><small>Мои оповещения:</small></h1>
+      </div>
+    </div>
+    <div class="row">
+      {% for invite in accepted_invites %}
+        {% if invite.message == "meeting" %}
+          <div class="well">
+             <a href = "/profile/{{ invite.user.username }}/">{{ invite.user_profile.user_firstname }} {{ invite.user_profile.user_surname }}</a> тоже хотел{% if invite.user_profile.user_sex == "Ж" %}а{% endif %} бы сходить с вами на свидание!<strong class="pull-right"> {{ invite.date }} </strong>
+          </div>
+        {%endif%}
+        {% if invite.message == "deep_know" %}
+          <div class="well">
+             <a href = "/profile/{{ invite.user.username }}/">{{ invite.user_profile.user_firstname }} {{ invite.user_profile.user_surname }}</a> Также как и вы хочет узнать вас получше! Действуйте! <strong class="pull-right"> {{ invite.date }} </strong>
+          </div>
+        {%endif%}
+        {% if invite.message == "love" %}
+          <div class="well">
+             <a href = "/profile/{{ invite.user.username }}/">{{ invite.user_profile.user_firstname }} {{ invite.user_profile.user_surname }}</a> тоже любит вас! {% if user_profile.user_sex == "М" %}Счастливичк!{% else %} Счастливица!{% endif %} <strong class="pull-right"> {{ invite.date }} </strong>
+          </div>
+        {%endif%}
+        {% if invite.message == "like" %}
+          <div class="well">
+             <a href = "/profile/{{ invite.user.username }}/">{{ invite.user_profile.user_firstname }} {{ invite.user_profile.user_surname }}</a> Также как и вы хочет узнать вас получше! Действуйте! <strong class="pull-right"> {{ invite.date }} </strong>
+          </div>
+        {%endif%}
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+<form action="/profile/change_avatar/" enctype="multipart/form-data" method="post" role="form">
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">Смена фото</h4>
+      </div>
+      <div class="modal-body">
+      {% csrf_token %}
+      {{ form_change_avatar }}
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+        <input type="submit" class="btn btn-primary" value="Cохранить">
+      </div>
+    </div>
+  </div>
+</div>
+</form>
+{% endblock %}
+
+{% block count %}
+  {{ invites_count }}
+{% endblock %}

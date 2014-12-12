@@ -1,0 +1,95 @@
+﻿{% extends 'profile_temp.html' %}
+{% load staticfiles %}
+<!DOCTYPE html>
+<!--<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <!-- Bootstrap core CSS -->
+    <!-- <link href="{% static "static/css/bootstrap.css" %}" rel="stylesheet" type='text/css'>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.0/jquery.min.js"></script>
+    <!-- Custom styles for this template -->
+    <!-- <link href="{% static "static/css/main.css" %}" rel="stylesheet" type='text/css'>
+      <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <!-- Fonts from Google Fonts -->
+   <!--  <link href='http://fonts.googleapis.com/css?family=Lato:300,400,900' rel='stylesheet' type='text/css'>
+    [if IE]>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <![endif]
+    <title>Messages</title>
+    <!-- BOOTSTRAP CORE STYLE CSS -->
+
+<!-- </head>- -->
+{% block profile_content %}
+<div id="headerwraper">
+  <div class="container">
+    <div class="row" style="padding-top:20px;">
+        <h3 class="text-center" > Мои сообщения </h3>
+        <br /><br />
+        <div class="col-md-8">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    История сообщений
+                </div>
+                <div class="panel-body">
+                    <ul class="media-list">
+                        <div id ="messages">
+                            <center>Выберите собеседника</center>
+                        </div>
+                    </ul>
+
+                </div>
+               <!--  <div class="panel-footer">
+                    <div class="input-group">
+                        <input id = "text" type="text" class="form-control" placeholder="Enter Message" />
+                        <span class="input-group-btn">
+                            <button id = "submt_test1" class="btn btn-info2" type="button">SEND</button>
+                        </span>
+                    </div>
+
+                </div> -->
+            </div>
+        </div>
+        <div class="col-md-4">
+              <div class="panel panel-primary">
+                <div class="panel-heading">
+                   Собеседники
+                </div>
+                <div class="panel-body">
+                    <ul class="media-list">
+                        {% for usr in users_list %}
+                                        <li class="media">
+
+                                            <div class="media-body">
+
+                                                <div class="media">
+                                                    <a class="pull-left" href="{{ usr.username }}/">
+                                                        <img class="media-object img-circle" style="height:40px; width:40px;" src="/static/{{ usr.users.user_photo }}" />
+                                                    </a>
+                                                    <div class="media-body" >
+
+                                                        <h5>
+                                                            <a href="{{ usr.username }}/" id ="{{ usr.username }}">
+                                                            {{ usr.users.user_firstname }} {{ usr.users.user_surname }}</a></h5>
+                                                            <!-- <small class="text-muted">{{ usr.username }}</small> -->
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </li>
+                        {% endfor %}
+                    </div>
+                </div>
+
+        </div>
+    </div>
+      </div>
+    <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+{% endblock %}
+
+{% block count %}
+  {{ invites_count }}
+{% endblock %}

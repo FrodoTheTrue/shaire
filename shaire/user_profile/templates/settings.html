@@ -1,0 +1,224 @@
+{% extends 'profile_temp.html' %}
+{% load staticfiles %}
+
+{% block profile_content %}
+<div class="row">
+        <div class="col-lg-12 col-lg-offset-4">
+          <br><br>
+          <br />
+        <div class="form-group">
+        <label class="col-sm-1 control-label">Логин</label>
+          <div class="col-sm-10">
+            {{ user.username }}
+          </div>
+        </div>
+        <br>
+        <div class="form-group">
+        <label class="col-sm-1 control-label">E-mail</label>
+          <div class="col-sm-10">
+            {{ user.email }}
+          </div>
+        </div>
+        <br>
+        <div class="form-group">
+          <label class="col-sm-1 control-label">Имя</label>
+          <div class="col-sm-10">
+              {{ user_profile.user_firstname }}
+              &nbsp <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#ChangeName"> Изменить </button>
+          </div>
+        </div>
+        <br>
+        <div class="form-group">
+          <label class="col-sm-1 control-label">Фамилия</label>
+          <div class="col-sm-10">
+              {{ user_profile.user_surname }}
+              &nbsp <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#ChangeSecondName"> Изменить </button>
+          </div>
+        </div>
+        <br>
+        <div class="form-group">
+          <label class="col-sm-1 control-label">Пол</label>
+          <div class="col-sm-10">
+              {% if user_profile.user_sex == 'Ж' %}
+              Женский
+              {% else %}
+              Мужской
+              {% endif %}
+              
+              &nbsp <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#ChangeSex"> Изменить </button>
+          </div>
+        </div>
+        <br>
+        <div class="form-group">
+          <label class="col-sm-1 control-label">Город</label>
+          <div class="col-sm-10">
+              {{ user_profile.user_city }}
+              &nbsp <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#ChangeCity"> Изменить </button>
+          </div>
+        </div>
+        <br>
+        <div class="form-group">
+          <label class="col-sm-1 control-label">VK ID</label>
+          <div class="col-sm-10">
+              {{ user_profile.user_vk }}
+              &nbsp <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#ChangeVK"> Изменить </button>
+          </div>
+        </div>
+        <br>
+        <div class="form-group">
+          <label class="col-sm-1 control-label">Дата рождения</label>
+          <div class="col-sm-10">
+              {{ user_profile.user_birthday }}
+          </div>
+        </div>
+        <br>
+        <br>
+        {% if form_error %}
+        {% for error in form_error%}
+          <br />
+      <label class="error">{{ error }}</label>
+      {% endfor%}
+      <br>
+        {% endif%}
+        {% if user_form_error %}
+        {% for error in user_form_error%}
+          <br />
+      <label class="error">{{ error }}</label>
+      {% endfor%}
+      <br>
+        {% endif%}
+          </div>
+        </form>
+      </div>
+    </div><!-- /row -->
+
+<!-- Modal ChangeName -->
+<form action="/profile/change_name/" enctype="multipart/form-data" method="post" role="form">
+<div class="modal fade" id="ChangeName" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">Смена имени</h4>
+      </div>
+      <div class="modal-body">
+      {% csrf_token %}
+      {{ change_name_form.user_firstname }}
+      </div>
+      <div class="modal-footer">
+        <input type="submit" class="btn btn-primary" value="Cохранить">      </div>
+    </div>
+  </div>
+</div>
+</form>
+
+
+<!-- Modal ChangeSecondName -->
+<form action="/profile/change_secondname/" enctype="multipart/form-data" method="post" role="form">
+<div class="modal fade" id="ChangeSecondName" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">Смена фамилии</h4>
+      </div>
+      <div class="modal-body">
+      {% csrf_token %}
+      {{ change_second_name_form.user_surname }}
+      </div>
+      <div class="modal-footer">
+        <input type="submit" class="btn btn-primary" value="Cохранить">      </div>
+    </div>
+  </div>
+</div>
+</form>
+
+
+<!-- Modal ChangeSex -->
+<form action="/profile/change_sex/" enctype="multipart/form-data" method="post" role="form">
+<div class="modal fade" id="ChangeSex" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">Смена пола</h4>
+      </div>
+      <div class="modal-body">
+      {% csrf_token %}
+      {{ change_sex_form.user_sex }}
+      </div>
+      <div class="modal-footer">
+        <input type="submit" class="btn btn-primary" value="Cохранить">      </div>
+    </div>
+  </div>
+</div>
+</form>
+
+
+
+<!-- Modal ChangeCity -->
+<form action="/profile/change_city/" enctype="multipart/form-data" method="post" role="form">
+<div class="modal fade" id="ChangeCity" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">Смена города</h4>
+      </div>
+      <div class="modal-body">
+      {% csrf_token %}
+      {{ change_city_form.user_city }}
+      </div>
+      <div class="modal-footer">
+        <input type="submit" class="btn btn-primary" value="Cохранить">      </div>
+    </div>
+  </div>
+</div>
+</form>
+
+
+<!-- Modal ChangeBirthday -->
+<form action="/profile/change_birthday/" enctype="multipart/form-data" method="post" role="form">
+<div class="modal fade" id="ChangeBirthday" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">Смена дня рождения</h4>
+      </div>
+      <div class="modal-body">
+      {% csrf_token %}
+      {{ change_birthday_form.user_birthday }}
+      </div>
+      <div class="modal-footer">
+        <input type="submit" class="btn btn-primary" value="Cохранить">      </div>
+    </div>
+  </div>
+</div>
+</form>
+
+
+<!-- Modal ChangeVK -->
+<form action="/profile/change_vk/" enctype="multipart/form-data" method="post" role="form">
+<div class="modal fade" id="ChangeVK" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">Смена ID VK</h4>
+      </div>
+      <div class="modal-body">
+      {% csrf_token %}
+      {{ change_vk_form.user_vk }}
+      </div>
+      <div class="modal-footer">
+        <input type="submit" class="btn btn-primary" value="Cохранить">      </div>
+    </div>
+  </div>
+</div>
+</form>
+{% endblock %}
+
+{% block count %}
+  {{ invites_count }}
+{% endblock %}
